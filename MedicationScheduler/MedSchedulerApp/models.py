@@ -24,14 +24,14 @@ class Presciption(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
 
-class ScheduleElement(models.Model):
-    TIMES = (
-        ('Morning', '09:00:00'),
-        ('Midday',  '12:00:00'),
-        ('Evening', '19:00:00'),
-        ('Bedtime', '22:00:00')
-    )
-    presciption = models.ForeignKey(Presciption, on_delete=models.CASCADE)
+# class ScheduleElement(models.Model):
+#     TIMES = (
+#         ('Morning', '09:00:00'),
+#         ('Midday',  '12:00:00'),
+#         ('Evening', '19:00:00'),
+#         ('Bedtime', '22:00:00')
+#     )
+#     presciption = models.ForeignKey(Presciption, on_delete=models.CASCADE)
     
-    time = models.TimeField()
-    is_taken = models.BooleanField(default=False)
+#     time = models.TimeField()
+#     is_taken = models.BooleanField(default=False)
