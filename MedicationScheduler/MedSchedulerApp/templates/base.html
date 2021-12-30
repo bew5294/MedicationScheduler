@@ -10,9 +10,13 @@
         <!-- for buttons to adding medication and precription check if logged in -->
         <a id=new-medication href="{% url 'MedicationScheduler:new_medication' %}">Add Medication</a>
         <a id=new-prescription href="{% url 'MedicationScheduler:new_prescription' %}">Add Prescription</a>
-
-        <!-- switch to login if logged in when page implemented -->
-        <a id=register href="{% url 'register' %}">Sign Up</a>
+        
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+            <a href="{% url 'login' %}">Log In</a>
+            <a href="{% url 'register' %}">Sign Up</a>
+        {% endif %}
     </div>
 </body>
 

@@ -5,10 +5,14 @@ from django.core.validators import RegexValidator
 # Create your models here.
 
 class Medication(models.Model):
-    name = models.CharField(max_length=50)
-    ndc = models.CharField(verbose_name='national drug code', primary_key=True, max_length=10, validators=[RegexValidator(r'^\d{1,10}$')])
-    dose = models.IntegerField()
+    name = models.CharField(max_length=50, unique=True)
+    ndc = models.CharField(verbose_name='National Drug Code', unique=True, max_length=10, validators=[RegexValidator(r'^\d{1,10}$')])
+    dose = models.IntegerField(verbose_name='Dosage')
+    strength = models.IntegerField(verbose_name='Strength (mg)')
     # interactions =\
+        
+    def __str__(self):
+        return self.name
 
 
 class Presciption(models.Model):
@@ -22,6 +26,9 @@ class Presciption(models.Model):
     date_filled = models.DateField()
     discard_after = models.DateField()
     date_added = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.medication.name
 
 
 # class ScheduleElement(models.Model):

@@ -1,19 +1,24 @@
 from django.shortcuts import render, redirect
 from .forms import *
 
-# Create your views here.
+
 def home(request):
-    return render(request, 'home.html', {"user": request.user})
+    if request.user.is_authenticated:
+        return render(request, 'home.html', {'user': request.user})
+    else:
+        return redirect('login')
+    
 
 def new_medication(request):
-    print("form reached")
     if request.method != 'POST':
         print("empty form")
         form = MedicationForm()
     
     else:
-        print("prepping to submit")
+        
         form = MedicationForm(data=request.POST)
+        print("prepping to submit", form.is_valid())
+        print(form.errors)
         if form.is_valid():
             print("form is valid")
             form.save()
@@ -38,4 +43,3 @@ def new_prescription(request):
     
     context = {'form': form}
     return render(request, 'new_prescription.html', context)
-        

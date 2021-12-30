@@ -9,7 +9,8 @@ class MedicationForm(forms.ModelForm):
         fields = [
             'name',
             'ndc',
-            'dose'
+            'dose',
+            'strength'
         ]
     
 
