@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'AuthApp',
+    'phonenumber_field',
+    'MedSchedulerApp'
 ]
 
 MIDDLEWARE = [
@@ -66,6 +69,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = "AuthApp.Account"
 
 WSGI_APPLICATION = 'MedicationScheduler.wsgi.application'
 
