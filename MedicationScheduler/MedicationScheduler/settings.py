@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AuthApp',
-    'phonenumber_field'
+    'phonenumber_field',
+    'MedSchedulerApp'
 ]
 
 MIDDLEWARE = [
