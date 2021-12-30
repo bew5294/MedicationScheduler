@@ -1,0 +1,19 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Medication Scheduler</title>
+</head>
+
+<body>
+    <div id=nav>
+        <a id=home href="{% url 'MedicationScheduler:home' %}">Home</a>
+
+        <!-- for buttons to adding medication and precription check if logged in -->
+        <a id=new-medication href="{% url 'MedicationScheduler:new_medication' %}">Add Medication</a>
+        <a id=new-prescription href="{% url 'MedicationScheduler:new_prescription' %}">Add Prescription</a>
+
+        <!-- switch to login if logged in when page implemented -->
+        <a id=register href="{% url 'register' %}">Sign Up</a>
+    </div>
+</body>
+
+{% block content %} {% endblock content %}

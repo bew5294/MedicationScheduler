@@ -3,7 +3,7 @@ from django.db.models import fields
 from MedSchedulerApp.models import *
 
 
-class Medication(forms.ModelForm):
+class MedicationForm(forms.ModelForm):
     class Meta:
         model = Medication
         fields = [
@@ -21,7 +21,7 @@ class PrescriptionForm(forms.ModelForm):
             'directions',
             'quantity',
             'refills',
-            'precriber',
+            'prescriber',
             'scanned_label',
             'date_filled',
             'discard_after'
