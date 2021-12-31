@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('AuthApp', '0002_profile'),
+        ('AuthApp', '0001_initial'),
     ]
 
     operations = [

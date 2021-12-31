@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets, DateField
 from django.db.models import fields
 from MedSchedulerApp.models import *
 
@@ -27,3 +28,8 @@ class PrescriptionForm(forms.ModelForm):
             'date_filled',
             'discard_after'
         ]
+        
+        widgets = {
+            'date_filled': widgets.DateInput(attrs={'type': 'date'}),
+            'discard_after': widgets.DateInput(attrs={'type': 'date'})
+        }

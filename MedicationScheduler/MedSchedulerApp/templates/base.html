@@ -12,10 +12,10 @@
         <a id=new-prescription href="{% url 'MedicationScheduler:new_prescription' %}">Add Prescription</a>
         
         {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">Log Out</a>
+            <a href="{% url 'Auth:logout' %}">Log Out</a>
         {% else %}
-            <a href="{% url 'login' %}">Log In</a>
-            <a href="{% url 'register' %}">Sign Up</a>
+            <a href="{% url 'Auth:login' %}">Log In</a>
+            <a href="{% url 'Auth:register' %}">Sign Up</a>
         {% endif %}
     </div>
 </body>
