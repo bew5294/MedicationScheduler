@@ -1,11 +1,23 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-  <h2>Home Page</h2>
-  <div>
-    {% if user.is_authenticated %}
-    <p>Hello {{user.username}} | {{user.email}}</p>
-    {% else %}
-    <p>You are not Authenticated</p>
-    {% endif %}
-  </div>
-{% endblock %}
+  {% if user.is_authenticated %}
+    <div class="container mt-3">
+      <div class="text-center">
+        <h2>Home Page</h2>
+        <div>
+          <p>Hello {{user.username}} | {{user.email}}</p>
+        </div>
+      </div>
+    </div>
+  {% else %}
+      <div>
+        <img class="img-fluid" src="{% static 'images/main_img.jpg' %}" alt="Main Image" />
+      </div>
+  {% endif %}
+{% endblock content%}
+
+
+
+
+
