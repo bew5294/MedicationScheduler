@@ -38,7 +38,7 @@ def login_view(request):
             if user is not None:
                 print(user)
                 login(request, user)
-                return redirect('/')
+                return redirect('/home')
             else:
                 print('User not found')
         else:
