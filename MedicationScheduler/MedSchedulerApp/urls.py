@@ -4,8 +4,11 @@ from . import views
 
 app_name = 'MedicationScheduler'
 urlpatterns = [
+    # front page
+    path('', views.front, name="front"),
+    
     # home page
-    path('', views.home, name='home'),
+    path('home', views.home, name='home'),
     
     # login page (maybe in AuthApp)
     # path('/login', views.login, name='login'),
@@ -22,4 +25,3 @@ urlpatterns = [
     # edit medication page
     # path('/medication/edit', views.edit_medication, name='edit_medication')
 ]
-

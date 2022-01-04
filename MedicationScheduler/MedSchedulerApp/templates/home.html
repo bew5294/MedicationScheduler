@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
-
-<h1>Medication Scheduler</h1>
-
-<!-- <div>
   {% if user.is_authenticated %}
-  <p>Hello {{user.username}} | {{user.email}}</p>
-  <a href="/logout">Log Out</a>
+    <div class="container mt-3">
+      <div class="text-center">
+        <h2>Home Page</h2>
+        <div>
+          <p>Hello {{user.username}} | {{user.email}}</p>
+
+          <h3>[add weekly scheduler]</h3>
+
+          <h3>[add precription dropdown]</h3>
+
+          <!-- check if user is a care giver -->
+          <h3>[add patient dropdown]</h3>
+        </div>
+      </div>
+    </div>
   {% else %}
-  <p>You are not Authenticated</p>
-  <a href="/login">Log In</a>
-  <a href="/register">Register</a>
+
   {% endif %}
-</div> -->
+{% endblock content%}
 
-<p>Hello {{user.username}} | {{user.email}}</p>
 
-<h3>[add weekly scheduler]</h3>
 
-<h3>[add precription dropdown]</h3>
 
-<!-- check if user is a care giver -->
-<h3>[add patient dropdown]</h3>
 
-{% endblock content %}

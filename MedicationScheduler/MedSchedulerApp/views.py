@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from .forms import *
 
 
+# Create your views here.
 def home(request):
-    if request.user.is_authenticated:
-        return render(request, 'home.html', {'user': request.user})
-    else:
+    if not request.user.is_authenticated:
         return redirect('Auth:login')
+    return render(request, 'home.html', {"user": request.user})
+
+
+def front(request):
+    return render(request, 'front.html', {"user": request.user})
     
 
 def new_medication(request):
@@ -45,5 +49,3 @@ def new_prescription(request):
         return render(request, 'new_prescription.html', context)
     else:
         return redirect('login')
-    
-    
