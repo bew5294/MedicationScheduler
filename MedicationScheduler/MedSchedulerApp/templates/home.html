@@ -8,13 +8,40 @@
         <h2>Home Page</h2>
         <div>
           <p>Hello {{user.username}} | {{user.email}}</p>
+          <div id='calendar'></div>
         </div>
       </div>
     </div>
   {% else %}
 
   {% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            themeSystem: 'bootstrap',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,listWeek'
+            },
+            events: [
+                {
+                    id: 'a',
+                    title: 'my event',
+                    start: new Date(),
+                    end: new Date(Date.now() + 1000 * 60 * 60 * 2),
+                }
+            ]
+        });
+        calendar.render();
+    });
+</script>
 {% endblock content%}
+
+
 
 
 
