@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from AuthApp.forms import RegistrationForm
+from .forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
@@ -15,7 +15,7 @@ def registration_view(request):
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(email=email, password=raw_password)
             login(request, account)
-            return redirect("/")
+            return redirect("MedicationScheduler:front")
         else:
             context['registration_form'] = form
     else:  # GET request
@@ -25,7 +25,7 @@ def registration_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('MedicationScheduler:front')
     if request.method == 'GET':
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
@@ -38,7 +38,7 @@ def login_view(request):
             if user is not None:
                 print(user)
                 login(request, user)
-                return redirect('/')
+                return redirect('MedicationScheduler:home')
             else:
                 print('User not found')
         else:
@@ -48,4 +48,4 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('/login')
+    return redirect('Auth:login')

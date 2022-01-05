@@ -1,13 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
 {% block content %}
-  <h2>Home Page</h2>
-  <div>
-    {% if user.is_authenticated %}
-    <p>Hello {{user.username}} | {{user.email}}</p>
-    <a href="/logout">Log Out</a>
-    {% else %}
-    <p>You are not Authenticated</p>
-    <a href="/login">Log In</a>
-    <a href="/register">Register</a>
-    {% endif %}
-  </div>
-{% endblock %}
+  {% if user.is_authenticated %}
+    <div class="container mt-3">
+      <div class="text-center">
+        <h2>Home Page</h2>
+        <div>
+          <p>Hello {{user.username}} | {{user.email}}</p>
+        </div>
+      </div>
+    </div>
+  {% else %}
+
+  {% endif %}
+{% endblock content%}
+
+
+
+
+
