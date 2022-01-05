@@ -14,11 +14,13 @@ def front(request):
     
 
 def new_medication(request):
+    if not request.user.is_authenticated:
+        return redirect('Auth:login')
+    
     if request.method != 'POST':
         form = MedicationForm()
     
     else:
-        
         form = MedicationForm(data=request.POST)
         if form.is_valid():
             form.save()
@@ -30,22 +32,19 @@ def new_medication(request):
 
 def new_prescription(request):
     # only logged in users can add a prescription
-    if request.user.is_authenticated:
-        print("form reached")
-        if request.method != 'POST':
-            print("empty form")
-            form = PrescriptionForm()
-        
-        else:
-            form = PrescriptionForm(data=request.POST)
-            if form.is_valid():
-                print("form is valid")
-                prescription = form.save(commit=False)
-                prescription.account = request.user
-                prescription.save()
-                return redirect('MedicationScheduler:home')
-        
-        context = {'form': form}
-        return render(request, 'new_prescription.html', context)
+    if not request.user.is_authenticated:
+        return redirect('Auth:login')
+    
+    if request.method != 'POST':
+        form = PrescriptionForm()
+    
     else:
-        return redirect('login')
+        form = PrescriptionForm(data=request.POST)
+        if form.is_valid():
+            prescription = form.save(commit=False)
+            prescription.account = request.user
+            prescription.save()
+            return redirect('MedicationScheduler:home')
+    
+    context = {'form': form}
+    return render(request, 'new_prescription.html', context)
