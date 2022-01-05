@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<h2>Add Prescription</h2>
+<div class="container mt-3">
+    <h2>Add Prescription</h2>
 
     {% if form.errors %}
         {% for field in form %}
@@ -18,10 +19,11 @@
         {% csrf_token %}
         <table>
             {% for field in form %}
-                <tr><td>{{ field.label }}: </td><td>{{ field }}</td></tr>
+                <tr><td class="col-12 col-md-3"> {{ field.label }}: </td><td class="col-12 col-md-3">{{ field }}</td></tr>
             {% endfor %}
         </table>
-        <button name=submit id=submit>Submit</button>
+        <button type="submit" class="btn btn-dark">Submit</button>
     </form>
+</div>
 
 {% endblock content %}
