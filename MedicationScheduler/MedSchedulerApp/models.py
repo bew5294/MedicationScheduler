@@ -16,7 +16,7 @@ class Medication(models.Model):
 
 
 class Presciption(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
     directions = models.TextField()
     quantity = models.IntegerField()

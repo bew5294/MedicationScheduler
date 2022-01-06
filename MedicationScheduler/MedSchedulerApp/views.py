@@ -42,7 +42,7 @@ def new_prescription(request):
         form = PrescriptionForm(data=request.POST)
         if form.is_valid():
             prescription = form.save(commit=False)
-            prescription.account = request.user
+            prescription.user = request.user
             prescription.save()
             return redirect('MedicationScheduler:home')
     
