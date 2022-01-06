@@ -31,14 +31,23 @@ class Presciption(models.Model):
         return self.medication.name
 
 
-# class ScheduleElement(models.Model):
-#     TIMES = (
-#         ('Morning', '09:00:00'),
-#         ('Midday',  '12:00:00'),
-#         ('Evening', '19:00:00'),
-#         ('Bedtime', '22:00:00')
-#     )
-#     presciption = models.ForeignKey(Presciption, on_delete=models.CASCADE)
+class Schedule(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
     
-#     time = models.TimeField()
-#     is_taken = models.BooleanField(default=False)
+    def __str__(self):
+        return self.user.username
+
+
+class ScheduleElement(models.Model):
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    presciption = models.ForeignKey(Presciption, on_delete=models.CASCADE)
+    
+    monday = models.BooleanField()
+    tuesday = models.BooleanField()
+    wednesday = models.BooleanField()
+    thursday = models.BooleanField()
+    friday = models.BooleanField()
+    saturday = models.BooleanField()
+    sunday = models.BooleanField()
+    time = models.TimeField()
+    is_taken = models.BooleanField(default=False)
