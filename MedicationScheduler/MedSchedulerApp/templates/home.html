@@ -8,11 +8,12 @@
         <h2>Home Page</h2>
         <div>
           <p>Hello {{user.username}} | {{user.email}}</p>
+<!--          initializing calendar here -->
           <div id='calendar'></div>
         </div>
       </div>
     </div>
-
+<!--    pop-up when click on event in the calendar -->
     <div class="modal" tabindex="-1" role="dialog" id="calendarModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -44,6 +45,7 @@
               center: 'title',
               right: 'dayGridMonth,timeGridWeek,listWeek'
             },
+            // {{ events|safe }} is not the best way to pass events to the calendar. See article: https://adamj.eu/tech/2020/02/18/safely-including-data-for-javascript-in-a-django-template/
             events: JSON.parse('{{ events|safe }}'),
             eventClick:  function(event) {
                 console.log( $('#modalBody'), event.event.description, event)
@@ -51,7 +53,9 @@
                 $('#modalBody').html(event.event.extendedProps.description);
                 $('#calendarModal').modal('show');
             },
-
+            /* this is the example of the structure of events in the calendar. Events can have more properties such as
+             background color, text color, so on. See documentation: https://fullcalendar.io
+             */
             // events: [
             //     {
             //         id: 'a',
