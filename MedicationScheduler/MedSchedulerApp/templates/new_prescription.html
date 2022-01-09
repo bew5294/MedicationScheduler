@@ -3,23 +3,50 @@
 {% block content %}
 
 <div class="container mt-3">
-    <h2>Add Prescription</h2>
-
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %} 
-            <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-            </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
-
+    <h2>Add Prescription</h2>    
+    
     <form action="{% url 'MedicationScheduler:new_prescription' %}" method="post">
+        {% if presc_form.errors %}
+            {% for field in presc_form %}
+                {% for error in field.errors %} 
+                <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
         {% csrf_token %}
         <table>
-            {% for field in form %}
-                <tr><td class="col-12 col-md-3"> {{ field.label }}: </td><td class="col-12 col-md-3">{{ field }}</td></tr>
+            {% for field in presc_form %}
+                <tr>
+                    <td class="col-12 col-md-3">{{ field.label }}: </td>
+                    <td class="col-12 col-md-3">{{ field }}</td>
+                    <td>{{ field.help_text }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <br>
+
+        {% if sched_form.errors %}
+            {% for field in sched_form %}
+                {% for error in field.errors %} 
+                <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {% csrf_token %}
+        <table>
+            {% for field in sched_form %}
+                <tr>
+                    <td class="col-12 col-md-3">{{ field.label }}: </td>
+                    <td class="col-12 col-md-3">{{ field }}</td>
+                    <td>{{ field.help_text }}</td>
+                </tr>
             {% endfor %}
         </table>
         <button type="submit" class="btn btn-dark">Submit</button>

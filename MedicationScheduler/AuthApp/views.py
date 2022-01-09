@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+
+
 from .forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 from AuthApp.models import Profile
@@ -17,6 +19,12 @@ def registration_view(request):
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(email=email, password=raw_password)
             login(request, account)
+            schedule = Schedule.objects.create(user=request.user)
+            schedule.save()
+            profile = Profile.objects.create(user=request.user)
+            profile.save()
+            
+            
             return redirect("MedicationScheduler:front")
         else:
             context['registration_form'] = form
@@ -24,6 +32,7 @@ def registration_view(request):
         form = RegistrationForm()
         context['registration_form'] = form
     return render(request, 'register.html', context)
+
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -47,6 +56,7 @@ def login_view(request):
             # If there were errors, we render the form with these
             # errors
             return render(request, 'login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)

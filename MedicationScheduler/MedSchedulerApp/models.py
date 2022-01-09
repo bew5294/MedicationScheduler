@@ -40,7 +40,7 @@ class Schedule(models.Model):
 
 class ScheduleElement(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    presciption = models.ForeignKey(Presciption, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Presciption, on_delete=models.CASCADE)
     
     monday = models.BooleanField()
     tuesday = models.BooleanField()

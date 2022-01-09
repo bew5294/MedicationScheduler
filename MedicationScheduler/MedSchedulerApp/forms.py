@@ -39,7 +39,6 @@ class ScheduleElementForm(forms.ModelForm):
     class Meta:
         model = ScheduleElement
         fields = [
-            'presciption',
             'monday',
             'tuesday',
             'wednesday',
