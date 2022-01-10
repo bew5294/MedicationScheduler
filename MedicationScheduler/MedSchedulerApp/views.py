@@ -44,19 +44,16 @@ def new_prescription(request):
         return redirect('Auth:login')
 
     if request.method != 'POST':
-        print('here', request.POST.keys())
         presc_form = PrescriptionForm()
         sched_form = ScheduleElementForm()
 
     else:
-        # if the toggle button is clicked try ti submit both forms
-        print('here', request.POST.keys())
+        # if the toggle button is clicked attempt to submit both forms
         if request.POST.get("toggle-btn"):
             presc_form = PrescriptionForm(data=request.POST)
             sched_form = ScheduleElementForm(data=request.POST)
 
             if presc_form.is_valid() and sched_form.is_valid():
-                print("both forms")
                 prescription = presc_form.save(commit=False)
                 prescription.user = request.user
                 prescription.save()
@@ -69,11 +66,10 @@ def new_prescription(request):
 
                 return redirect('MedicationScheduler:home')
 
-        # if not only submit prescription form
+        # if not only attempt to submit prescription form
         else:
             form = PrescriptionForm(data=request.POST)
             if form.is_valid():
-                print("one form")
                 prescription = form.save(commit=False)
                 prescription.user = request.user
                 prescription.save()
@@ -81,32 +77,3 @@ def new_prescription(request):
 
     context = {'presc_form': presc_form, 'sched_form': sched_form}
     return render(request, 'new_prescription.html', context)
-
-
-class AddPrecription(MultiModelFormView):
-    form_classes = {
-        'presc_form': PrescriptionForm,
-        'sched_form': ScheduleElementForm
-    }
-
-    template_name = 'new_prescription.html'
-
-    def get_success_url(self):
-        return reverse('MedicationScheduler:home')
-
-    def forms_valid(self, forms):
-        prescription = forms['presc_form'].save(commit=False)
-        prescription.user = self.request.user
-        prescription.save()
-
-        schedule_element = forms['sched_form'].save(commit=False)
-        # print(presc)
-        # print(presc.id)
-        schedule_element.schedule = Schedule.objects.get(
-            user=self.request.user)
-        schedule_element.prescription = Presciption.objects.last()
-        print("HERE")
-        print(schedule_element.prescription)
-        schedule_element.save()
-
-        # return super(AddPrecription, self).forms_valid(forms)
