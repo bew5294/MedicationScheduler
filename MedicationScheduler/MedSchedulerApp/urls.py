@@ -11,7 +11,9 @@ urlpatterns = [
     
     # new prescription page
     # path('new_precription', views.new_prescription, name='new_prescription'),
-    path('new_precription', views.new_schedule_prescription, name='new_prescription'),
+    # path('new_precription', views.new_prescription, name='new_prescription'),
+    
+    path('new_precription', views.new_prescription, name='new_prescription'),
     
     # edit precription page
     # path('/precription/edit', views.edit_precription, name='edit_precription'),

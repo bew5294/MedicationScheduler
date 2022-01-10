@@ -40,52 +40,47 @@ def new_medication(request):
 
 
 def new_prescription(request):
-    # only logged in users can add a prescription
     if not request.user.is_authenticated:
         return redirect('Auth:login')
 
     if request.method != 'POST':
-        form = PrescriptionForm()
-
-    else:
-        form = PrescriptionForm(data=request.POST)
-        if form.is_valid():
-            prescription = form.save(commit=False)
-            prescription.user = request.user
-            prescription.save()
-            return redirect('MedicationScheduler:home')
-
-    context = {'form': form}
-    return render(request, 'new_prescription.html', context)
-
-
-def new_schedule_prescription(request):
-    if not request.user.is_authenticated:
-        return redirect('Auth:login')
-
-    if request.method != 'POST':
+        print('here', request.POST.keys())
         presc_form = PrescriptionForm()
         sched_form = ScheduleElementForm()
 
     else:
-        presc_form = PrescriptionForm(data=request.POST)
-        sched_form = ScheduleElementForm(data=request.POST)
-        
-        if presc_form.is_valid() and sched_form.is_valid():
-            prescription = presc_form.save(commit=False)
-            prescription.user = request.user
-            prescription.save()
-            
-            schedule_element = sched_form.save(commit=False)
-            schedule_element.schedule = Schedule.objects.get(user=request.user)
-            schedule_element.prescription = prescription
-            schedule_element.save()
-            
-            return redirect('MedicationScheduler:home')
-    
+        # if the toggle button is clicked try ti submit both forms
+        print('here', request.POST.keys())
+        if request.POST.get("toggle-btn"):
+            presc_form = PrescriptionForm(data=request.POST)
+            sched_form = ScheduleElementForm(data=request.POST)
+
+            if presc_form.is_valid() and sched_form.is_valid():
+                print("both forms")
+                prescription = presc_form.save(commit=False)
+                prescription.user = request.user
+                prescription.save()
+
+                schedule_element = sched_form.save(commit=False)
+                schedule_element.schedule = Schedule.objects.get(
+                    user=request.user)
+                schedule_element.prescription = prescription
+                schedule_element.save()
+
+                return redirect('MedicationScheduler:home')
+
+        # if not only submit prescription form
+        else:
+            form = PrescriptionForm(data=request.POST)
+            if form.is_valid():
+                print("one form")
+                prescription = form.save(commit=False)
+                prescription.user = request.user
+                prescription.save()
+                return redirect('MedicationScheduler:home')
+
     context = {'presc_form': presc_form, 'sched_form': sched_form}
     return render(request, 'new_prescription.html', context)
-    
 
 
 class AddPrecription(MultiModelFormView):
