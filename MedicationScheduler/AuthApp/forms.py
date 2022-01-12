@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import widgets
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from .models import Account
+from .models import Account, Profile
 
 
 class RegistrationForm(UserCreationForm):
@@ -25,10 +26,19 @@ class PasswordChangingForm(PasswordChangeForm):
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['email', 'username', 'first_name', 'last_name']
 
     email = forms.CharField(disabled=True, widget=forms.TextInput(attrs={'class': 'form-control'}), label="Email")
     username = forms.CharField(disabled=True, widget=forms.TextInput(attrs={'class': 'form-control'}), label="Username")
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="First Name")
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Last Name")
 
+class UpdateUserProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['phone_number', 'dob', 'primary_physician', 'preferred_pharmacy']
+
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Phone Number")
+    dob = forms.CharField(widget=widgets.DateInput(attrs={'class': 'form-control', 'type': 'date'}), label="Birthday")
+    primary_physician = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Primary Physician")
+    preferred_pharmacy = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Preferred Pharmacy")

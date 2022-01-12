@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegistrationForm, PasswordChangingForm, UpdateUserForm
+from .forms import RegistrationForm, PasswordChangingForm, UpdateUserForm, UpdateUserProfile
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -57,6 +57,7 @@ def logout_view(request):
 def profile_view(request):
     user_update_form = UpdateUserForm(instance=request.user)
     password_change_form = PasswordChangingForm(request.user)
+    update_profile_form = UpdateUserProfile()
 
     if request.method == 'POST' and 'change_password' in request.POST:
         password_change_form = PasswordChangingForm(request.user, request.POST)
@@ -67,6 +68,11 @@ def profile_view(request):
         user_update_form = UpdateUserForm(request.POST, instance=request.user)
         if user_update_form.is_valid():
             user_update_form.save()
+    elif request.method == 'POST' and 'update_profile_info' in request.POST:
+        update_profile_form = UpdateUserProfile(request.POST, instance=request.user)
+        if update_profile_form.is_valid():
+            update_profile_form.save()
 
     return render(request, "profile.html",
-                  {'password_change_form': password_change_form, "user_update_form": user_update_form})
+                  {'password_change_form': password_change_form, "user_update_form": user_update_form,
+                   "update_profile_form": update_profile_form})
