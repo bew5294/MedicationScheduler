@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegistrationForm
+from .forms import RegistrationForm, PasswordChangingForm, UpdateUserForm
 from django.contrib.auth.forms import AuthenticationForm
+
 
 # Create your views here.
 
@@ -22,6 +23,7 @@ def registration_view(request):
         form = RegistrationForm()
         context['registration_form'] = form
     return render(request, 'register.html', context)
+
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -46,6 +48,25 @@ def login_view(request):
             # errors
             return render(request, 'login.html', {'form': form})
 
+
 def logout_view(request):
     logout(request)
     return redirect('Auth:login')
+
+
+def profile_view(request):
+    user_update_form = UpdateUserForm(instance=request.user)
+    password_change_form = PasswordChangingForm(request.user)
+
+    if request.method == 'POST' and 'change_password' in request.POST:
+        password_change_form = PasswordChangingForm(request.user, request.POST)
+        if password_change_form.is_valid():
+            password_change_form.save()
+            return redirect('/login')
+    elif request.method == 'POST' and 'user_update' in request.POST:
+        user_update_form = UpdateUserForm(request.POST, instance=request.user)
+        if user_update_form.is_valid():
+            user_update_form.save()
+
+    return render(request, "profile.html",
+                  {'password_change_form': password_change_form, "user_update_form": user_update_form})
