@@ -6,10 +6,10 @@
     
     <form id="add-prescription" action="{% url 'MedicationScheduler:new_prescription' %}" method="post">
         {% csrf_token %}
-
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" name="toggle-btn" id="toggle-btn" onclick="toggleSchedForm()" class="btn btn-light">
-            <label class="form-check-label" for="toggle-btn">Schedule Prescription</label>
+        
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="toggle-btn" id="toggle-btn" onclick="toggleSchedForm()" class="btn btn-light">
+            <label class="custom-control-label" for="toggle-btn">Schedule Prescription</label>
         </div>
         
         <br>
