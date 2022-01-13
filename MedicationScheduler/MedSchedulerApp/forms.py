@@ -33,3 +33,23 @@ class PrescriptionForm(forms.ModelForm):
             'date_filled': widgets.DateInput(attrs={'type': 'date'}),
             'discard_after': widgets.DateInput(attrs={'type': 'date'})
         }
+
+
+class ScheduleElementForm(forms.ModelForm):
+    class Meta:
+        model = ScheduleElement
+        fields = [
+            'presciption',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday',
+            'time'
+        ]
+        
+        widgets = {
+            'time': widgets.TimeInput(attrs={'type': 'time'})
+        }

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
+from AuthApp.models import Profile
+from MedSchedulerApp.models import Schedule
 
 # Create your views here.
 

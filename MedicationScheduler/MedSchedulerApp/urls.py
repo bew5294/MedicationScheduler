@@ -13,7 +13,8 @@ urlpatterns = [
     # path('/login', views.login, name='login'),
     
     # new prescription page
-    path('new_precription', views.new_prescription, name='new_prescription'),
+    # path('new_precription', views.new_prescription, name='new_prescription'),
+    path('new_precription', views.AddPrecription.as_view(), name='new_prescription'),
     
     # edit precription page
     # path('/precription/edit', views.edit_precription, name='edit_precription'),

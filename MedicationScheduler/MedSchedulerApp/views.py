@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
 import json
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import *
+from multi_form_view import MultiModelFormView
 
 
 # Create your views here.
@@ -54,3 +56,19 @@ def new_prescription(request):
 
     context = {'form': form}
     return render(request, 'new_prescription.html', context)
+
+class AddPrecription(MultiModelFormView):
+    form_classes = {
+        'presc_form': PrescriptionForm,
+        'sched_form': ScheduleElementForm
+    }
+    
+    template_name = 'new_prescription.html'
+    
+    def get_success_url(self):
+        return reverse('home')
+    
+    def forms_valid(self, forms):
+        prescription = forms['presc_form'].save(commit=False)
+        schedule_element = forms['sched_form'].save(commit=False)
+        return super(AddPrecription, self).forms_valid(forms)
