@@ -63,7 +63,7 @@ def profile_view(request):
         password_change_form = PasswordChangingForm(request.user, request.POST)
         if password_change_form.is_valid():
             password_change_form.save()
-            return redirect('/login')
+            return redirect('Auth:login')
     elif request.method == 'POST' and 'user_update' in request.POST:
         user_update_form = UpdateUserForm(request.POST, instance=request.user)
         if user_update_form.is_valid():
