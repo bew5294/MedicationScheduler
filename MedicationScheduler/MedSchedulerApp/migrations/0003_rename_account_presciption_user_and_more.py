@@ -15,9 +15,9 @@ class Migration(migrations.Migration):
             old_name='account',
             new_name='user',
         ),
-        migrations.RenameField(
-            model_name='schedule',
-            old_name='account',
-            new_name='user',
-        ),
+        # migrations.RenameField(
+        #     model_name='schedule',
+        #     old_name='account',
+        #     new_name='user',
+        # ),
     ]

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import widgets, DateField
 from django.db.models import fields
-from MedSchedulerApp.models import *
+from MedSchedulerApp.models import Medication, Prescription, ScheduleElement
 
 
 class MedicationForm(forms.ModelForm):
@@ -17,7 +17,7 @@ class MedicationForm(forms.ModelForm):
 
 class PrescriptionForm(forms.ModelForm):
     class Meta:
-        model = Presciption
+        model = Prescription
         fields = [
             'medication',
             'directions',

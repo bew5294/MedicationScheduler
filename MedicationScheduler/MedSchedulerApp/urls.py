@@ -10,10 +10,10 @@ urlpatterns = [
     path('home', views.home, name='home'),
     
     # new prescription page
-    path('new_precription', views.new_prescription, name='new_prescription'),
+    path('new_prescription', views.new_prescription, name='new_prescription'),
     
-    # edit precription page
-    # path('/precription/edit', views.edit_precription, name='edit_precription'),
+    # edit prescription page
+    # path('/prescription/edit', views.edit_prescription, name='edit_prescription'),
     
     # new medication page
     path('new_medication', views.new_medication, name='new_medication'),
