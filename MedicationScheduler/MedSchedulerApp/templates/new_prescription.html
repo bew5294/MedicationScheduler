@@ -1,29 +1,87 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div class="container mt-3">
     <h2>Add Prescription</h2>
-
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %} 
-            <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-            </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
-
-    <form action="{% url 'MedicationScheduler:new_prescription' %}" method="post">
+    
+    <form id="add-prescription" action="{% url 'MedicationScheduler:new_prescription' %}" method="post">
         {% csrf_token %}
+        
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="toggle-btn" id="toggle-btn" onclick="toggleSchedForm()" class="btn btn-light">
+            <label class="custom-control-label" for="toggle-btn">Schedule Prescription</label>
+        </div>
+        
+        <br>
+
+        {% if presc_form.errors %}
+            {% for field in presc_form %}
+                {% for error in field.errors %} 
+                <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        
         <table>
-            {% for field in form %}
-                <tr><td class="col-12 col-md-3"> {{ field.label }}: </td><td class="col-12 col-md-3">{{ field }}</td></tr>
+            {% for field in presc_form %}
+                <tr>
+                    <td class="col-12 col-md-3">{{ field.label }}: </td>
+                    <td class="col-12 col-md-3">{{ field }}</td>
+                    <td>{{ field.help_text }}</td>
+                </tr>
             {% endfor %}
         </table>
+
+        <div id="sched-form" style="display: none">
+            <br>
+
+            {% if sched_form.errors %}
+                {% for field in sched_form %}
+                    {% for error in field.errors %} 
+                    <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            <table>
+                {% for field in sched_form %}
+                    <tr>
+                        <td class="col-12 col-md-3">{{ field.label }}: </td>
+                        <td class="col-12 col-md-3">{{ field }}</td>
+                        <td>{{ field.help_text }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <br>
+
         <button type="submit" class="btn btn-dark">Submit</button>
     </form>
+
+    <br>
 </div>
 
+<script>
+    function toggleSchedForm() {
+        var toggle_btn =  document.getElementById("toggle-btn");
+        var sched_form = document.getElementById("sched-form");
+        var add_presc = document.getElementById("add-prescription");
+
+        // showing the schedule element form
+        if (sched_form.style.display === "none") {
+            sched_form.style.display = "block";
+        } 
+
+        // hiding the schedule element form
+        else {
+            sched_form.style.display = "none";
+        }
+    }
+</script>
 {% endblock content %}

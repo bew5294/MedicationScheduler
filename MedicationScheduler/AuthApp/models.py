@@ -75,7 +75,10 @@ class Account(AbstractBaseUser, PermissionsMixin):
 class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
     #TODO: read about formating for phone number field
-    phone_number = PhoneNumberField(blank=True, null=True)
+    # phone_number = PhoneNumberField(null=True, blank=True)
     dob = models.DateField(max_length=8, blank=True, null=True)
     primary_physician = models.CharField(max_length=200, null=True, blank=True)
     preferred_pharmacy = models.CharField(max_length=200, null=True, blank=True)
+    
+    def __str__(self):
+        return self.user.username

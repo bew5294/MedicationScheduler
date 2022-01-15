@@ -15,7 +15,7 @@ class Medication(models.Model):
         return self.name
 
 
-class Presciption(models.Model):
+class Prescription(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
     directions = models.TextField()
@@ -40,7 +40,7 @@ class Schedule(models.Model):
 
 class ScheduleElement(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    presciption = models.ForeignKey(Presciption, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Prescription, on_delete=models.CASCADE)
     
     monday = models.BooleanField()
     tuesday = models.BooleanField()
