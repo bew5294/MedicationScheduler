@@ -4,18 +4,68 @@ from django.urls import reverse
 from .forms import *
 from .models import *
 from multi_form_view import MultiModelFormView
+from datetime import datetime, date
+from datetime import timedelta
 
 
 # Create your views here.
 def home(request):
     # example
-    events = [
-        {"id": 'a', "title": 'my event', "start": "2022-01-06", "end": "2022-01-08",
-         "description": 'This is a cool event'},
-        {"id": 'b', "title": 'my event 2', "start": "2022-01-08", "description": 'This is a cool event 2'}]
+    # events = [
+    #     {"id": 'a', "title": 'my event', "start": "2022-01-06", "end": "2022-01-08",
+    #      "description": 'This is a cool event'},
+    #     {"id": 'b', "title": 'my event 2', "start": "2022-01-08", "description": 'This is a cool event 2'}]
+    
+    events = getEvents(request.user)
     if not request.user.is_authenticated:
         return redirect('Auth:login')
-    return render(request, 'home.html', {"user": request.user, "events": json.dumps(events)})
+    return render(request, 'home.html', {"user": request.user, "events": json.dumps(events, default=str)})
+
+
+def getEvents(user):
+    schedule = Schedule.objects.get(user=user)
+    elements = ScheduleElement.objects.filter(schedule=schedule)
+    
+    events = []
+    
+    # daysOfWeek
+    # startTime
+    # endTime
+    # startRecur
+    # endRecur
+    # groupId
+    
+    for element in elements:
+        weekdays = []
+        if element.sunday:
+            weekdays.append(0)
+        if element.monday:
+            weekdays.append(1)
+        if element.tuesday:
+            weekdays.append(2)
+        if element.wednesday:
+            weekdays.append(3)
+        if element.thursday:
+            weekdays.append(4)
+        if element.friday:
+            weekdays.append(5)
+        if element.saturday:
+            weekdays.append(6)
+        
+        events.append(
+            {
+                'id':         element.id,
+                'title':      element.prescription.medication.name,
+                'startTime':  element.time,
+                # 'endTime':    element.time + timedelta(minutes=15),
+                # 'endTime':    element.time + datetime.time(15,0),
+                'startRecur': date.today(),
+                'endRecur':   element.prescription.discard_after,
+                'daysOfWeek': weekdays
+            }
+        )
+    
+    return events
 
 
 def front(request):
