@@ -9,6 +9,7 @@ useful links:
 3) PhoneNumberField: https://github.com/stefanfoulis/django-phonenumber-field
 '''
 
+
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, first_name, last_name, password=None):
         if not email:
@@ -72,13 +73,14 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
 
+
 class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
-    #TODO: read about formating for phone number field
+    # TODO: read about formating for phone number field
     phone_number = models.CharField(max_length=16, blank=True, null=True)
     dob = models.DateField(max_length=8, blank=True, null=True)
     primary_physician = models.CharField(max_length=200, null=True, blank=True)
     preferred_pharmacy = models.CharField(max_length=200, null=True, blank=True)
-    
+
     def __str__(self):
         return self.user.username

@@ -64,7 +64,7 @@ def logout_view(request):
 def profile_view(request):
     user_update_form = UpdateUserForm(instance=request.user)
     password_change_form = PasswordChangingForm(request.user)
-    update_profile_form = UpdateUserProfile()
+    update_profile_form = UpdateUserProfile(instance=request.user.profile)
 
     if request.method == 'POST' and 'change_password' in request.POST:
         password_change_form = PasswordChangingForm(request.user, request.POST)
@@ -76,7 +76,7 @@ def profile_view(request):
         if user_update_form.is_valid():
             user_update_form.save()
     elif request.method == 'POST' and 'update_profile_info' in request.POST:
-        update_profile_form = UpdateUserProfile(request.POST, instance=request.user)
+        update_profile_form = UpdateUserProfile(request.POST, instance=request.user.profile)
         if update_profile_form.is_valid():
             update_profile_form.save()
 

@@ -38,7 +38,7 @@ class UpdateUserProfile(forms.ModelForm):
         model = Profile
         fields = ['phone_number', 'dob', 'primary_physician', 'preferred_pharmacy']
 
-    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Phone Number")
-    dob = forms.CharField(widget=widgets.DateInput(attrs={'class': 'form-control', 'type': 'date'}), label="Birthday")
-    primary_physician = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Primary Physician")
-    preferred_pharmacy = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Preferred Pharmacy")
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Phone Number", required=False)
+    dob = forms.CharField(widget=widgets.DateInput(attrs={'class': 'form-control', 'type': 'date'}), label="Birthday", required=False)
+    primary_physician = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Primary Physician", required=False)
+    preferred_pharmacy = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Preferred Pharmacy", required=False)
