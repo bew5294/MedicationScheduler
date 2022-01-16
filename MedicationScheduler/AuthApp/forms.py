@@ -23,6 +23,7 @@ class PasswordChangingForm(PasswordChangeForm):
     class Meta:
         fields = ('old_password', 'new_password1', 'new_password2')
 
+
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = Account
@@ -33,12 +34,25 @@ class UpdateUserForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="First Name")
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Last Name")
 
+
+
+
 class UpdateUserProfile(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['phone_number', 'dob', 'primary_physician', 'preferred_pharmacy']
 
-    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Phone Number", required=False)
-    dob = forms.CharField(widget=widgets.DateInput(attrs={'class': 'form-control', 'type': 'date'}), label="Birthday", required=False)
-    primary_physician = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Primary Physician", required=False)
-    preferred_pharmacy = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Preferred Pharmacy", required=False)
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label="Phone Number",
+                                   required=False)
+    dob = forms.CharField(widget=widgets.DateInput(attrs={'class': 'form-control', 'type': 'date'}), label="Birthday",
+                          required=False)
+    primary_physician = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                        label="Primary Physician", required=False)
+    preferred_pharmacy = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                         label="Preferred Pharmacy", required=False)
+
+    def clean_dob(self):
+        dob = self.cleaned_data['dob']
+        if dob == "":
+            dob = None
+        return dob
