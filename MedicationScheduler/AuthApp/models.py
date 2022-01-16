@@ -79,3 +79,6 @@ class Profile(models.Model):
     dob = models.DateField(max_length=8, blank=True, null=True)
     primary_physician = models.CharField(max_length=200, null=True, blank=True)
     preferred_pharmacy = models.CharField(max_length=200, null=True, blank=True)
+    
+    def __str__(self):
+        return self.user.username

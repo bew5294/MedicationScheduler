@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
 import json
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import *
+from .models import *
+from multi_form_view import MultiModelFormView
 
 
 # Create your views here.
@@ -37,20 +40,40 @@ def new_medication(request):
 
 
 def new_prescription(request):
-    # only logged in users can add a prescription
     if not request.user.is_authenticated:
         return redirect('Auth:login')
 
     if request.method != 'POST':
-        form = PrescriptionForm()
+        presc_form = PrescriptionForm()
+        sched_form = ScheduleElementForm()
 
     else:
-        form = PrescriptionForm(data=request.POST)
-        if form.is_valid():
-            prescription = form.save(commit=False)
-            prescription.user = request.user
-            prescription.save()
-            return redirect('MedicationScheduler:home')
+        # if the toggle button is clicked attempt to submit both forms
+        if request.POST.get("toggle-btn"):
+            presc_form = PrescriptionForm(data=request.POST)
+            sched_form = ScheduleElementForm(data=request.POST)
 
-    context = {'form': form}
+            if presc_form.is_valid() and sched_form.is_valid():
+                prescription = presc_form.save(commit=False)
+                prescription.user = request.user
+                prescription.save()
+
+                schedule_element = sched_form.save(commit=False)
+                schedule_element.schedule = Schedule.objects.get(
+                    user=request.user)
+                schedule_element.prescription = prescription
+                schedule_element.save()
+
+                return redirect('MedicationScheduler:home')
+
+        # if not only attempt to submit prescription form
+        else:
+            form = PrescriptionForm(data=request.POST)
+            if form.is_valid():
+                prescription = form.save(commit=False)
+                prescription.user = request.user
+                prescription.save()
+                return redirect('MedicationScheduler:home')
+
+    context = {'presc_form': presc_form, 'sched_form': sched_form}
     return render(request, 'new_prescription.html', context)

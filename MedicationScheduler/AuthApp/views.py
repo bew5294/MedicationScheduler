@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .forms import RegistrationForm, PasswordChangingForm, UpdateUserForm, UpdateUserProfile
 from django.contrib.auth.forms import AuthenticationForm
+from AuthApp.models import Profile
+from MedSchedulerApp.models import Schedule
 
 
 # Create your views here.
@@ -16,6 +18,12 @@ def registration_view(request):
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(email=email, password=raw_password)
             login(request, account)
+            schedule = Schedule.objects.create(user=request.user)
+            schedule.save()
+            profile = Profile.objects.create(user=request.user)
+            profile.save()
+            
+            
             return redirect("MedicationScheduler:front")
         else:
             context['registration_form'] = form
@@ -53,7 +61,6 @@ def logout_view(request):
     logout(request)
     return redirect('Auth:login')
 
-
 def profile_view(request):
     user_update_form = UpdateUserForm(instance=request.user)
     password_change_form = PasswordChangingForm(request.user)
@@ -76,3 +83,4 @@ def profile_view(request):
     return render(request, "profile.html",
                   {'password_change_form': password_change_form, "user_update_form": user_update_form,
                    "update_profile_form": update_profile_form})
+
