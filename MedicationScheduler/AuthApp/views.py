@@ -66,6 +66,7 @@ def profile_view(request):
     password_change_form = PasswordChangingForm(request.user)
     update_profile_form = UpdateUserProfile(instance=request.user.profile)
 
+
     if request.method == 'POST' and 'change_password' in request.POST:
         password_change_form = PasswordChangingForm(request.user, request.POST)
         if password_change_form.is_valid():

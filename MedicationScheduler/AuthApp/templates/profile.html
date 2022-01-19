@@ -53,8 +53,22 @@
             </div>
             <div class="tab-pane fade" id="caregiver">
               <div class="card-body pb-2">
-
-                <p>Add Caregiver Here</p>
+                {% if user.caregiver %}
+                <p>Your caregiver is: </p>
+                <p>{{user.caregiver}}</p>
+                {%else%}
+                <p> Add caregiver?</p>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                </div>
+                <div class="collapse" id="collapseExample">
+<!--                  <div class="card card-body">-->
+<!--                    <p>Search bar + submit button</p>-->
+<!--                  </div>-->
+                  <p>Search bar + submit button</p>
+                </div>
+                {% endif%}
 
               </div>
             </div>
